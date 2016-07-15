@@ -1,0 +1,29 @@
+project:
+    name: "droid/mysql"
+    description: "Install MySQL Server"
+
+variables:
+    passwords:
+        mysql:
+            root: ~
+
+tasks:
+    -
+      name: "Update packages"
+      command: "apt-get:update"
+    -
+      name: "Copy a file of debconf database entries to answer the MySQL root passwd question"
+      command: "fs:copy"
+      arguments:
+          src: "!{{ mod_path}}/assets/debconf-selections-mysql-server.template"
+          dest: "/tmp/debconf-selections-mysql-server"
+    -
+      name: "Insert the debconf database MySQL root passwd entries"
+      command: "debconfdb:set"
+      arguments:
+          file: "/tmp/debconf-selections-mysql-server"
+    -
+      name: "Install package mysql-server"
+      command: "apt-get:install"
+      arguments:
+          package: "mysql-server"
