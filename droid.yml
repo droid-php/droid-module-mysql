@@ -23,7 +23,7 @@ tasks:
       arguments:
           file: "/tmp/debconf-selections-mysql-server"
     -
-      name: "Install package mysql-server"
+      name: "Install package mysql-server and php5-mysql"
       command: "apt-get:install"
       arguments:
-          package: "mysql-server"
+          package: "mysql-server php5-mysql"
