@@ -1,2 +1,2 @@
-{{ mysql_server_package }} mysql-server/root_password password {{{ passwords.mysql.root }}}
-{{ mysql_server_package }} mysql-server/root_password_again password {{{ passwords.mysql.root }}}
+{{ mysql_server_package }} mysql-server/root_password password {{{ mysql_root_password }}}
+{{ mysql_server_package }} mysql-server/root_password_again password {{{ mysql_root_password }}}

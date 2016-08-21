@@ -28,10 +28,7 @@ The steps involved are:-
 1. One or more Inventory Hosts, having a `public_ip`.
 2. Password values for the following variables:-
 
-        passwords:
-          mysql:
-            root: <string>  # For the root user
-
+        mysql_root_password: <string>  # For the root user
 
 ## Optional information
 

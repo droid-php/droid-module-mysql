@@ -6,23 +6,22 @@ variables:
     mysql_bind_address: 0.0.0.0
     mysql_server_id: ~
     mysql_server_package: mysql-server
-    
-    passwords:
-        mysql:
-            root: ~
+    mysql_root_password: ~
+    mysql_replication_user: repln
+    mysql_replication_password: ~
 
 tasks:
     -
       name: "Update packages"
       command: "apt-get:update"
     -
-      name: "Copy a file of debconf database entries to answer the MySQL/MariaDB root passwd question"
+      name: "Copy a file of debconf database entries to answer the MySQL/MariaDB root password question"
       command: "fs:copy"
       arguments:
           src: "!{{ mod_path}}/assets/debconf-selections.template"
           dest: "/tmp/debconf-selections-{{ mysql_server_package }}"
     -
-      name: "Insert the debconf database MySQL root passwd entries"
+      name: "Insert the debconf database MySQL root password entries"
       command: "debconfdb:set"
       arguments:
           file: "/tmp/debconf-selections-{{ mysql_server_package }}"
@@ -58,9 +57,9 @@ tasks:
       name: "Create a MySQL remote root account for management"
       command: "mysql:adduser"
       arguments:
-          url: "mysql://root:{{{ passwords.mysql.root }}}@localhost/"
+          url: "mysql://root:{{{ mysql_root_password }}}@localhost/"
           username: "root"
-          password: "{{{ passwords.mysql.root }}}"
+          password: "{{{ mysql_root_password }}}"
           allowed-host: "any"
           grant: "all"
           grant-level: "*.*"
