@@ -63,6 +63,7 @@ tasks:
           allowed-host: "any"
           grant: "all"
           grant-level: "*.*"
+          can-grant: ~
 
 triggers:
     -
