@@ -1,0 +1,4 @@
+# Slave specific overrides
+
+[mysqld]
+read-only = 1

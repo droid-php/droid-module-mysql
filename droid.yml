@@ -3,6 +3,10 @@ project:
     description: "Install MySQL Server"
 
 variables:
+    mysql_bind_address: 0.0.0.0
+    mysql_server_id: ~
+    mysql_server_package: mysql-server
+    
     passwords:
         mysql:
             root: ~
@@ -12,18 +16,58 @@ tasks:
       name: "Update packages"
       command: "apt-get:update"
     -
-      name: "Copy a file of debconf database entries to answer the MySQL root passwd question"
+      name: "Copy a file of debconf database entries to answer the MySQL/MariaDB root passwd question"
       command: "fs:copy"
       arguments:
-          src: "!{{ mod_path}}/assets/debconf-selections-mysql-server.template"
-          dest: "/tmp/debconf-selections-mysql-server"
+          src: "!{{ mod_path}}/assets/debconf-selections.template"
+          dest: "/tmp/debconf-selections-{{ mysql_server_package }}"
     -
       name: "Insert the debconf database MySQL root passwd entries"
       command: "debconfdb:set"
       arguments:
-          file: "/tmp/debconf-selections-mysql-server"
+          file: "/tmp/debconf-selections-{{ mysql_server_package }}"
     -
-      name: "Install package mysql-server and php5-mysql"
+      name: "Install package {{ mysql_server_package }} and php5-mysql"
       command: "apt-get:install"
       arguments:
-          package: "mysql-server php5-mysql"
+          package: "{{ mysql_server_package }} php5-mysql"
+    -
+      name: "Copy tuning configuration to the server"
+      command: "fs:copy"
+      arguments:
+          src: "!{{ mod_path}}/assets/tuning.cnf.template"
+          dest: "/etc/mysql/conf.d/tuning.cnf"
+      trigger: "Restart mysql-server"
+    -
+      name: "Copy replication master configuration to the master"
+      command: "fs:copy"
+      arguments:
+          src: "!{{ mod_path}}/assets/master.cnf.template"
+          dest: "/etc/mysql/conf.d/master.cnf"
+      host_filter: "host.variables['replication_role'] == 'master'"
+      trigger: "Restart mysql-server"
+    -
+      name: "Copy replication slave configuration to the slave"
+      command: "fs:copy"
+      arguments:
+          src: "!{{ mod_path}}/assets/slave.cnf.template"
+          dest: "/etc/mysql/conf.d/slave.cnf"
+      host_filter: "host.variables['replication_role'] == 'slave'"
+      trigger: "Restart mysql-server"
+    -
+      name: "Create a MySQL remote root account for management"
+      command: "mysql:adduser"
+      arguments:
+          url: "mysql://root:{{{ passwords.mysql.root }}}@localhost/"
+          username: "root"
+          password: "{{{ passwords.mysql.root }}}"
+          allowed-host: "any"
+          grant: "all"
+          grant-level: "*.*"
+
+triggers:
+    -
+        name: "Restart mysql-server"
+        command: "service:restart"
+        arguments:
+            name: "mysql-server"
