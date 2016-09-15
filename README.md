@@ -5,10 +5,9 @@ Install MySQL Server. For more information on Droid, please see
 
 The steps involved are:-
 
-1. Update platform packages.
-2. Prevent the mysql-server package from interactively asking for a new root
+1. Prevent the mysql-server package from interactively asking for a new root
    password.
-3. Install mysql-server (and php5-mysql) packages.
+2. Install mysql-server (and php5-mysql) packages.
 
 
 ## Assumptions
