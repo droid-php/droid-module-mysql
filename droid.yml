@@ -68,4 +68,4 @@ triggers:
         name: "Restart mysql-server"
         command: "service:restart"
         arguments:
-            name: "mysql-server"
+            name: "mysql"
