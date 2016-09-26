@@ -25,12 +25,14 @@ tasks:
     -
       name: "Install package {{ mysql_server_package }} and php5-mysql"
       command: "apt-get:install"
+      sudo: true
       max_runtime: 600
       arguments:
           package: "{{ mysql_server_package }} php5-mysql"
     -
       name: "Copy tuning configuration to the server"
       command: "fs:copy"
+      sudo: true
       arguments:
           src: "!{{ mod_path}}/assets/tuning.cnf.template"
           dest: "/etc/mysql/conf.d/tuning.cnf"
@@ -38,6 +40,7 @@ tasks:
     -
       name: "Copy replication master configuration to the master"
       command: "fs:copy"
+      sudo: true
       arguments:
           src: "!{{ mod_path}}/assets/master.cnf.template"
           dest: "/etc/mysql/conf.d/master.cnf"
@@ -46,6 +49,7 @@ tasks:
     -
       name: "Copy replication slave configuration to the slave"
       command: "fs:copy"
+      sudo: true
       arguments:
           src: "!{{ mod_path}}/assets/slave.cnf.template"
           dest: "/etc/mysql/conf.d/slave.cnf"
@@ -65,7 +69,8 @@ tasks:
 
 triggers:
     -
-        name: "Restart mysql-server"
-        command: "service:restart"
-        arguments:
-            name: "mysql"
+      name: "Restart mysql-server"
+      command: "service:restart"
+      sudo: true
+      arguments:
+          name: "mysql"
