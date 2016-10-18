@@ -1,4 +1,4 @@
-# Droid Module: droid/mysql
+# Droid Module: mysql
 
 Install MySQL Server. For more information on Droid, please see
 [droidphp.com](http://droidphp.com).

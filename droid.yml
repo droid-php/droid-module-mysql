@@ -1,6 +1,4 @@
-project:
-    name: "droid/mysql"
-    description: "Install MySQL Server"
+description: "Install MySQL Server"
 
 variables:
     mysql_bind_address: 0.0.0.0
