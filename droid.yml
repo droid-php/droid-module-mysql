@@ -1,6 +1,7 @@
 description: "Install MySQL Server"
 
 variables:
+    use_legacy_templating: true
     mysql_bind_address: 0.0.0.0
     mysql_server_id: ~
     mysql_server_package: mysql-server
