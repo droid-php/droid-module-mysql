@@ -19,6 +19,7 @@ tasks:
     -
       name: "Insert the debconf database MySQL root password entries"
       command: "debconfdb:set"
+      sudo: true
       arguments:
           file: "/tmp/debconf-selections-{{ mysql_server_package }}"
     -
