@@ -66,6 +66,18 @@ tasks:
           grant: "all"
           grant-level: "*.*"
           can-grant: ~
+    -
+      name: "Create a MySQL user account for replication"
+      command: "mysql:adduser"
+      arguments:
+          url: "mysql://root:{{{ mysql_root_password }}}@localhost/"
+          username: "{{{ mysql_replication_user }}}"
+          password: "{{{ mysql_replication_password }}}"
+          allowed-host: "%"
+          grant: "REPLICATION SLAVE"
+          grant-level: "*.*"
+      host_filter: "host.variables['replication_role']"
+
 
 triggers:
     -
