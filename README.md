@@ -27,8 +27,23 @@ The steps involved are:-
 1. One or more Inventory Hosts, having a `public_ip`.
 2. Password values for the following variables:-
 
-        mysql_root_password: <string>  # For the root user
+    mysql_root_password: <string>  # For the root user
+
 
 ## Optional information
 
-None.
+1. An array of user accounts to create, with grants/permissions:
+
+    mysql_users:
+      -
+        username: "repln"
+        password: "super_secret_password_one"
+        allowed-host: all
+        grant: "REPLICATION SLAVE"
+        grant-level: "*.*"
+      -
+        username: "joe"
+        password: "super_secret_password_two"
+        allowed-host: all
+        grant: "SELECT, UPDATE, INSERT, DELETE, CREATE, INDEX, ALTER, DROP, LOCK TABLES, CREATE VIEW"
+        grant-level: "*.*"

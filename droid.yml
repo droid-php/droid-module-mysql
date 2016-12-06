@@ -6,8 +6,6 @@ variables:
     mysql_server_id: ~
     mysql_server_package: mysql-server
     mysql_root_password: ~
-    mysql_replication_user: repln
-    mysql_replication_password: ~
 
 tasks:
     -
@@ -67,16 +65,17 @@ tasks:
           grant-level: "*.*"
           can-grant: ~
     -
-      name: "Create a MySQL user account for replication"
+      name: "Create custom MySQL user accounts"
       command: "mysql:adduser"
       arguments:
           url: "mysql://root:{{{ mysql_root_password }}}@localhost/"
-          username: "{{{ mysql_replication_user }}}"
-          password: "{{{ mysql_replication_password }}}"
-          allowed-host: "%"
-          grant: "REPLICATION SLAVE"
-          grant-level: "*.*"
-      host_filter: "host.variables['replication_role']"
+          username: "{{{ item.username }}}"
+          password: "{{{ item.password }}}"
+          allowed-host: "{{{ item.allowed-host }}}"
+          grant: "{{{ item.grant }}}"
+          grant-level: "{{{ item.grant-level }}}"
+      with_items:
+          mysql_users
 
 
 triggers:
