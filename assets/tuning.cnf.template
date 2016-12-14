@@ -123,11 +123,11 @@ log_slave_updates               = 1
 default_storage_engine          = InnoDB
 sql_mode                        = ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
 # you can't just change log file size, requires special procedure
-innodb_buffer_pool_size         = 1G
+innodb_buffer_pool_size         = 4G
 
-innodb_log_buffer_size          = 8M
+innodb_log_buffer_size          = 256M
 innodb_log_group_home_dir       = /var/lib/mysql
-#innodb_log_file_size            = 50M
+innodb_log_file_size            = 2G
 innodb_log_files_in_group       = 2
 
 innodb_max_dirty_pages_pct      = 90
@@ -137,7 +137,7 @@ innodb_file_per_table           = 1
 
 innodb_io_capacity              = 800
 innodb_read_io_threads          = 4
-innodb_write_io_threads         = 4
+innodb_write_io_threads         = 16
 innodb_additional_mem_pool_size = 16M
 innodb_flush_method             = O_DIRECT
 innodb_flush_log_at_trx_commit  = 1
