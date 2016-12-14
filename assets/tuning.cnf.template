@@ -144,7 +144,7 @@ innodb_flush_log_at_trx_commit  = 1
 innodb_data_home_dir            = /var/lib/mysql
 innodb_data_file_path           = ibdata1:10M:autoextend
 innodb_thread_concurrency       = 8
-#innodb_file_format             = Barracuda
+innodb_file_format             = Barracuda
 
 #
 # * Security Features
