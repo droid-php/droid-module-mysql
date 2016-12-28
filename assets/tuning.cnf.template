@@ -40,8 +40,8 @@ server-id = {{{ mysql_server_id }}}
 #
 max_connections                 = 999
 connect_timeout                 = 5
-wait_timeout                    = 600
-max_allowed_packet              = 16M
+wait_timeout                    = 1800
+max_allowed_packet              = 128M
 thread_cache_size               = 128
 sort_buffer_size                = 2M
 bulk_insert_buffer_size         = 16M
